@@ -9,6 +9,10 @@ class Person < Nameable
   attr_accessor :name, :age
   attr_reader :id
 
+  def correct_name
+    @name
+  end
+
   def of_age?
     age >= 18
   end
