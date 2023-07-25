@@ -1,5 +1,12 @@
+require_relative 'decorator'
+
 class TrimmerDecorator < Decorator
+  def initialize(nameable)
+    @nameable = nameable
+    super(nameable)
+  end
+
   def correct_name
-    @namable.correct_name.slice(0, 10)
+    @nameable.correct_name.slice(0, 10)
   end
 end
