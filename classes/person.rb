@@ -10,7 +10,7 @@ class Person < Nameable
     @rentals = []
     super(name)
   end
-  
+
   def correct_name
     @name
   end
@@ -24,9 +24,8 @@ class Person < Nameable
   end
 
   def add_rental(rental)
-    if can_use_services?
-      @rentals.push(rental)
-    else
-      raise NotImplementedError, 'This user is not allowed to use services'
+    raise NotImplementedError, 'This user is not allowed to use services' unless can_use_services?
+
+    @rentals.push(rental)
   end
 end
