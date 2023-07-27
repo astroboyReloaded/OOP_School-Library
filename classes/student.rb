@@ -1,7 +1,16 @@
+require_relative 'classroom'
+
 class Student < Person
-  def initialize(id, name, age, classroom)
+  attr_reader :classroom
+
+  def initialize(id, name, age, classroom = nil)
     super(id, name, age)
     @classroom = classroom
+  end
+
+  def asign_classroom(classroom)
+    @classroom = classroom
+    classroom.students.push(self)
   end
 
   def play_hooky

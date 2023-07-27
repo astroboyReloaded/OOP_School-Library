@@ -4,6 +4,6 @@ class Nameable
   end
 
   def correct_name
-    raise NonImplementedError, "#{self.class} has no implemented method '#{__method__}'"
+    raise NotImplementedError, "#{self.class} has no implemented method '#{__method__}'"
   end
 end
