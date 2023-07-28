@@ -1,7 +1,7 @@
-require_relative './classes/student'
-require_relative './classes/teacher'
-require_relative './classes/book'
-require_relative './classes/rental'
+require_relative 'classes/student'
+require_relative 'classes/teacher'
+require_relative 'classes/book'
+require_relative 'classes/rental'
 
 class App
   def initialize
@@ -31,25 +31,25 @@ class App
     age = gets.chomp.to_i
     puts 'Enter person role:'
 
-    loop do
-      puts '1. Student'
-      puts '2. Teacher'
+    puts '1. Student'
+    puts '2. Teacher'
+    choice = gets.chomp.to_i
 
-      choice = gets.chomp.to_i
+    person_of_type(choice, name, age)
+  end
 
-      case choice
-      when 1
-        @people.push(Student.new(name, age))
-        puts "New student '#{name}' created successfully!"
-      when 2
-        puts 'Enter teacher specialization'
-        specialization = gets.chomp
-        @people.push(Teacher.new(name, age, specialization))
-        puts "New teacher '#{name}' created successfully!"
-      else
-        puts 'Invalid choice. Person was not created'
-      end
-      break # Fix: Exit the loop after a valid choice is made
+  def person_of_type(choice, name, age)
+    case choice
+    when 1
+      @people.push(Student.new(name, age))
+      puts "New student '#{name}' created successfully!"
+    when 2
+      puts 'Enter teacher specialization'
+      specialization = gets.chomp
+      @people.push(Teacher.new(name, age, specialization))
+      puts "New teacher '#{name}' created successfully!"
+    else
+      puts 'Invalid choice. Person was not created'
     end
   end
 
@@ -68,7 +68,7 @@ class App
     puts 'Enter the ID of the person renting the book:'
     list_people
     renter_id = gets.chomp.to_i
-    renter = @people.find { |p| p.id ==  renter_id }
+    renter = @people.find { |p| p.id == renter_id }
 
     if renter.nil?
       puts "Person with ID #{person_id} not found. Rental was not created."
@@ -114,41 +114,47 @@ class App
     end
   end
 
+  OPTIONS = {
+    1 => :list_books,
+    2 => :list_people,
+    3 => :create_person,
+    4 => :create_book,
+    5 => :create_rental,
+    6 => :list_rentals_for_person,
+    7 => :exit_app
+  }.freeze
+
   def run
-    puts "Welcome to the Library Management Console App!"
-    STDOUT.flush
+    puts 'Welcome to the Library Management Console App!'
+    $stdout.flush
 
     loop do
       puts "\nPlease choose an option:"
-      puts "1. List all books"
-      puts "2. List all people"
-      puts "3. Create a person"
-      puts "4. Create a book"
-      puts "5. Create a rental"
-      puts "6. List all rentals for a given person ID"
-      puts "7. Quit"
+      puts '1. List all books'
+      puts '2. List all people'
+      puts '3. Create a person'
+      puts '4. Create a book'
+      puts '5. Create a rental'
+      puts '6. List all rentals for a given person ID'
+      puts '7. Quit'
 
       choice = gets.chomp.to_i
-
-      case choice
-      when 1
-        list_books
-      when 2
-        list_people
-      when 3
-        create_person
-      when 4
-        create_book
-      when 5
-        create_rental
-      when 6
-        list_rentals_for_person
-      when 7
-        puts "Exiting the app..."
-        break
-      else
-        puts "Invalid option. Please try again."
-      end
+      run_option(choice)
     end
+  end
+
+  def run_option(choice)
+    selected_option = OPTIONS[choice]
+
+    if selected_option
+      send(selected_option)
+    else
+      puts 'Invalid option. Please try again.'
+    end
+  end
+
+  def exit_app
+    puts 'Exiting the app...'
+    exit(0)
   end
 end
