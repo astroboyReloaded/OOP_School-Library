@@ -1,11 +1,12 @@
-require './classes/nameable'
-require './classes/person'
-require './classes/capitalize_decorator'
-require './classes/trimmer_decorator'
+#!/usr/bin/env ruby
 
-person = Person.new(22, 'maximilianus')
-puts person.correct_name
-capitalized_person = CapitalizeDecorator.new(person)
-puts capitalized_person.correct_name
-capitalized_trimmed_person = TrimmerDecorator.new(capitalized_person)
-puts capitalized_trimmed_person.correct_name
+$stdout.sync = true
+
+require_relative 'app'
+
+def main
+  app = App.new
+  app.run
+end
+
+main
